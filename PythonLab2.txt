@@ -1,0 +1,71 @@
+#Задание 1. Задачи на одномерные списки
+#Вариант 1
+#Удалить в списке все числа, которые повторяются более двух раз.
+
+import random
+
+Primes = [random.randrange(1,10) for i in range(10)]
+print(Primes)
+NewPrimes = list(set(Primes))
+print(NewPrimes)
+
+
+#Найти подмножество данного множества чисел такое,
+#что сумма его элементов равна заданному числу.
+
+SumPrimes = int(input("Enter a prime number: "))
+Primes.sort(reverse=True)
+result = []
+i = 0
+while SumPrimes > 0 or SumPrimes != 0:
+    if SumPrimes < min(Primes):
+        break
+    if Primes[i] > SumPrimes:
+        i += 1
+        continue
+    else:
+        SumPrimes -= Primes[i]
+        result.append(Primes[i])
+        i += 1
+    if SumPrimes != 0:
+        print("No found")
+    else:
+        print("Set of numbers:", result)
+
+
+
+#Вариант 2
+#Введите одномерный целочисленный список. Найдите наибольший нечетный элемент.
+
+import random
+
+Primes = [random.randrange(1,10) for i in range(10)]
+print(Primes)
+
+max = max(i for i in Primes if i%2 != 0)
+print("Maximum odd element:", max)
+
+
+#Найдите минимальный по модулю элемент списка.
+min = abs(min(Primes))
+print("Minimum element", min)
+
+
+
+#Задание 2. Задачи на многомерные списки
+#Выберете одну из задач:
+#1.	В матрице найти номер строки, сумма чисел в которой максимальна.
+import random
+
+Matrix = [[random.randrange(1,100)
+for i in range(10)] for j in range(10)]
+LineNumber = 0
+for p in range(len(Matrix)):
+    if sum(Matrix[p]) > LineNumber:
+        LineNumber = p
+print(Matrix)
+print("Number line:", LineNumber)
+
+
+
+
