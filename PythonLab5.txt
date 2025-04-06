@@ -1,0 +1,67 @@
+class Table:
+    __mass = 0
+
+    def __init__(self, mass0):
+        self.__mass = mass0
+
+    # чтение инкапсулированной массы
+    def get_mass(self):
+        return self.__mass
+
+#журнальный стол
+class JournalTable(Table):
+    storage = 0
+
+
+# обеденный стол
+class DinnerTable(Table):
+    __places = 0
+
+    def __init__(self, mass0):
+        Table.__init__(self, mass0)
+        self.__places = mass0//5
+
+    # чтение инкапсулированного числа мест
+    def get_places(self):
+        return self.__places
+
+
+class Truck:
+    __maxMass = 0
+    __tables = []
+
+    def __init__(self, max_mass):
+        self.__maxMass = max_mass
+        self.__tables = []
+        self.__current_mass = 0
+
+# методы в классе Truck, что позоволит загружать столы(Table) до лимита загрузки
+
+    def load_table(self, table):
+        if self.__current_mass + table.get_mass() <= self.__maxMass:
+            self.__tables.append(table)
+            self.__current_mass += table.get_mass()
+            return True
+        else:
+            print(f"Weight exceeds the limit! It is not possible to load a table with a weight of {table.get_mass()} kg.")
+            # Масса превышает лимит! Невозможно загрузить стол с определенным весом
+            return False
+    def current_load(self):
+        return self.__current_mass
+
+    def tables_loaded(self):
+        return len(self.__tables)
+
+truck = Truck(20)
+
+table1 = JournalTable(10)
+table2 = DinnerTable(5)
+table3 = JournalTable(10)
+
+truck.load_table(table1) # True
+truck.load_table(table2) # True
+truck.load_table(table3) # False превышает лимит
+
+print(f"Current loaded weight {truck.current_load()} kg") # Текущая загруженная масса
+print(f"Number of loaded tables {truck.tables_loaded()} kg") # Количество загруженных столов
+
