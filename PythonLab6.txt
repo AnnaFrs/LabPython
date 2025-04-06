@@ -1,0 +1,109 @@
+# создайте класс и поля (статические и динамические)
+# создайте три метода (класса, объекта и статический)
+# выберите поле или метод реализации инкапсуляции
+# пропишите запись и считывание (get, set) инкапсулированных полей
+# id, название, автор, издательство, год издания
+
+class Book:
+    # статическое поле
+    book_count = 0
+
+    # динамические поля
+    def __init__(self, id, title, author, publisher, year):
+        self.id = id
+        self.title = title
+        self.author = author
+        self.publisher = publisher
+        self.year = year
+
+    # метод класса
+    @classmethod
+    def new_book(cls, id, title, author, publisher, year):
+        return cls(id, title, author, publisher, year)
+
+    # метод объекта
+    def display_info(self):
+        return f"Id: {self.id}, Title: {self.title}, Author: {self.author}, Publisher: {self.publisher}, Year: {self.year}"
+
+    # статический метод
+    @staticmethod
+    def get_book_count():
+        return f"Total number of books: {Book.book_count}"
+
+    # get, set инкапсулированных полей
+    def set_year(self, year):
+        if year > 0:
+            self.__year = year
+        else:
+            raise ValueError("Year must be a positive number")
+
+    def get_year(self):
+        return self.__year
+
+# Создать список объектов
+books = [
+    Book(1, "Java Programming", "James Gosling", "Addison-Wesley", 2020),
+    Book(2, "Spring Boot in Action", "Craig Walls", "Manning Publications", 2019),
+    Book(3, "Data Structures and Algorithms", "Robert Lafore", "Sams", 2018),
+    Book(4, "Clean Code", "Robert C. Martin", "Pearson", 2008),
+    Book(5, "Harry Potter and the Philosopher's Stone ", "J.K. Rowling", "Bloomsbury Publishing", 1997),
+    Book(6, "The Hobbit", "J.R.R. Tolkien", "George Allen and Unwin", 1937)]
+
+# Вывести список книг заданного автора
+author_books = [book.display_info() for book in books if book.author == "James Gosling"]
+print("Books by James Gosling:")
+for info in author_books:
+    print(info)
+
+# Вывести список книг, выпущенных после заданного года
+year_books = [book.display_info() for book in books if book.year > 2000]
+print("\nBooks published after 2000:")
+for info in year_books:
+    print(info)
+
+
+# добавить: __setattr__, __str__,
+# 2 маг арифметических метода,
+# 2 маг оператора сравнения, __new__, __del__
+
+    def __setattr__(self, key, value):
+        # присваивается значение
+        print(f"Assigned value {key}")
+        return object.__setattr__(self, key, value)
+
+
+    def __str__(self):
+        # строковое представление объекта
+        return f"The book \"{self.title}\" written by {self.author} {self.year} year edition"
+
+
+    def __eq__(self, other):
+        # сравнение книг по автору
+        if self.name == other.name:
+            return f"The names of the authors are the same"
+        else:
+            return f"The names of the authors are different"
+
+
+    def __lt__(self, other):
+        # сравнение книг по году издания
+        if isinstance(other, Book):
+            return self.year < other.year
+        return NotImplemented
+
+
+    def __new__(cls, *args, **kwargs):
+        # создание нового экземпляра класса
+        instance = super(Book, cls).__new__(cls)
+        return instance
+
+
+    def __del__(self):
+        # удаление объекта
+        print("Deleting an object: ", self.publisher)
+
+
+
+
+
+
